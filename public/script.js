@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const noteForm = document.getElementById('note-submit-form');
-  const notesListUL = document.getElementById('notes-list-ul');
   const noteFormText = document.getElementById('note-text');
+  const notesContainer = document.getElementById('notes-container');
+
+  getNotesOnStartup();
 
   noteForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -26,14 +28,33 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   });
 
+  function getNotesOnStartup() {
+    fetch('/initialize')
+      .then(res => res.json())
+      .then(data => { 
+        if (!data.length) {
+          let pTag = document.createElement('p');
+          pTag.innerText = 'You have no notes';
+          notesContainer.append(pTag);
+        } else {
+          displayNotes(data);
+        }
+      })
+  }
+
   function displayNotes(notes) {
-    notesListUL.innerHTML = '';
+    notesContainer.innerHTML = '';
+    const ulTag = document.createElement('ul');
+    ulTag.setAttribute('id', 'notes-list-ul');
 
     notes.forEach(note => {
-      let li = document.createElement('li');
-      li.textContent = note.text;
-      notesListUL.append(li);
+      let liTag = document.createElement('li');
+      liTag.textContent = note.text;
+      ulTag.append(liTag);
+      ulTag.append(document.createElement('br'));
     });
+
+    notesContainer.append(ulTag);
   }
   
 });
