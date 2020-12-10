@@ -1,6 +1,6 @@
 # notes
 
-Lightweight Notes app where DOM is queried using vanilla JavaScript as opposed to jQuery, back end built in Node.js and Express.js, EJS used as view engine.
+Lightweight Notes app where DOM is queried using vanilla JavaScript as opposed to jQuery, back end built in Node.js and Express.js, EJS used as view engine and Fetch API used for client-server communcation.
 
 ## Usage
 
