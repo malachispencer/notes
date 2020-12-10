@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const noteForm = document.getElementById('note-submit-form');
-  const noteContainer = document.getElementById('note-container');
+  const notesListUL = document.getElementById('notes-list-ul');
+  const noteFormText = document.getElementById('note-text');
 
   noteForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -9,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const object = { 
       noteText: e.target[0].value 
     };
+
+    noteFormText.value = '';
 
     fetch('/', {
       method: 'POST',
@@ -18,14 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(object)
     })
     .then(res => res.json())
-    .then(data => console.log(data))
-
+    .then(data => { 
+      displayNotes(data);
+    })
   });
 
-  // function displayNotes(notes) {
-  //   notes.forEach(note => {
-  //     noteContainer.append(wrapNote(note));
-  //   });
-  // }
+  function displayNotes(notes) {
+    notesListUL.innerHTML = '';
 
+    notes.forEach(note => {
+      let li = document.createElement('li');
+      li.textContent = note.text;
+      notesListUL.append(li);
+    });
+  }
+  
 });
