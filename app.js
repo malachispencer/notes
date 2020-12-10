@@ -18,6 +18,10 @@ app.post('/', (req, res) => {
   res.send(noteList.showNotes());
 });
 
+app.get('/initialize', (req, res) => {
+  res.send(noteList.showNotes());
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
